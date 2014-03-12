@@ -6,8 +6,8 @@ JSBP.canvas.load = function() {
     JSBP.canvas.context = $("#screen")[0].getContext("2d");
 
     // Initiate fast per-pixel stuff using typed arrays
-    JSBP.canvas.imageData = JSBP.canvas.context.getImageData(0, 0, 256, 256);
-    JSBP.canvas.buffer = new ArrayBuffer(JSBP.canvas.imageData.data.length);
+    JSBP.canvas.image = JSBP.canvas.context.getImageData(0, 0, 256, 256);
+    JSBP.canvas.buffer = new ArrayBuffer(JSBP.canvas.image.data.length);
     JSBP.canvas.buffer8 = new Uint8ClampedArray(JSBP.canvas.buffer);
     JSBP.canvas.array = new Uint32Array(JSBP.canvas.buffer);
 
@@ -29,6 +29,6 @@ JSBP.canvas.update = function() {
         JSBP.canvas.array[i] = JSBP.canvas.palette[JSBP.mem[start | i]];
 
     // And put the modified data on the screen
-    JSBP.canvas.imageData.data.set(JSBP.canvas.buffer8);
-    JSBP.canvas.context.putImageData(JSBP.canvas.imageData, 0, 0);
+    JSBP.canvas.image.data.set(JSBP.canvas.buffer8);
+    JSBP.canvas.context.putImageData(JSBP.canvas.image, 0, 0);
 }

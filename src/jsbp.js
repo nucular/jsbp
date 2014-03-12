@@ -24,7 +24,7 @@ JSBP.setRunning = function(state) {
     JSBP.running = state;
 
     if (state)
-        JSBP.updateId = setInterval(JSBP.running.update, 1000 / 60);
+        JSBP.updateId = setInterval(JSBP.update, 1000 / 60);
     else
         clearInterval(JSBP.updateId);
 }
