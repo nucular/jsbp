@@ -2,7 +2,7 @@ JSBP.core = {};
 
 JSBP.core.load = function() {
     // We add 8 bytes to avoid overflows
-    JSBP.mem = new Uint8ArrayBuffer(0x1000008);
+    JSBP.mem = new Uint8Array(0x1000008);
 }
 
 JSBP.core.update = function() {
