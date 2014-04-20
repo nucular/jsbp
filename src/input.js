@@ -3,7 +3,7 @@ JSBP.input = {}
 JSBP.input.keyMap = [86, 70, 82, 52, 67, 89, 68, 83, 65, 69, 87, 81, 51, 50, 49, 88];
 JSBP.input.keyStates = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-JSBP.input.load = function() {
+JSBP.input.init = function() {
     $("body").bind("keydown", JSBP.input.keyDown);
     $("body").bind("keyup", JSBP.input.keyUp);
 }

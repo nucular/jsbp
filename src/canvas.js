@@ -2,7 +2,7 @@ JSBP.canvas = {};
 
 JSBP.canvas.palette = new Uint32Array(255);
 
-JSBP.canvas.load = function() {
+JSBP.canvas.init = function() {
     JSBP.canvas.context = $("#screen")[0].getContext("2d");
 
     // Initiate fast per-pixel stuff using typed arrays
@@ -19,7 +19,7 @@ JSBP.canvas.load = function() {
                 JSBP.canvas.palette[i++] = 0xFF000000 | b<<16 | g<<8 | r;
 }
 
-JSBP.canvas.update = function() {
+JSBP.canvas.tick = function() {
     // Fetch the graphics block location
     var start = JSBP.mem[5] << 16;
     var i = 0x10000;

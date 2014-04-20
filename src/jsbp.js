@@ -1,32 +1,41 @@
 JSBP = {};
 
+// Constants
+JSBP.MEMSIZE = 0x1000008;
+
 JSBP.running = false;
-JSBP.updateId = 0;
+JSBP.tickId = 0;
 
 // This will be our main memory once JSBP.core loads
 JSBP.mem = null;
 
-JSBP.load = function() {
-    JSBP.core.load();
-    JSBP.canvas.load();
-    JSBP.audio.load();
+JSBP.init = function() {
+    JSBP.core.init();
+    JSBP.canvas.init();
+    JSBP.audio.init();
+    JSBP.input.init();
+    JSBP.loader.init();
 
-    JSBP.setRunning(true);
+    //JSBP.setRunning(true);
 }
 
-JSBP.update = function() {
-    JSBP.core.update();
-    JSBP.canvas.update();
-    JSBP.audio.update();
+JSBP.tick = function() {
+    JSBP.core.tick();
+    JSBP.canvas.tick();
+    JSBP.audio.tick();
 }
 
 JSBP.setRunning = function(state) {
     JSBP.running = state;
 
-    if (state)
-        JSBP.updateId = setInterval(JSBP.update, 1000 / 60);
-    else
-        clearInterval(JSBP.updateId);
+    if (state) {
+        JSBP.tickId = setInterval(JSBP.tick, 1000 / 60);
+        JSBP.audio.node.connect(JSBP.audio.context.destination);
+    }
+    else {
+        clearInterval(JSBP.tickId);
+        JSBP.audio.node.disconnect();
+    }
 }
 
-$(JSBP.load);
+$(JSBP.init);
