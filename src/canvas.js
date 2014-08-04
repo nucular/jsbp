@@ -1,6 +1,6 @@
 JSBP.canvas = {};
 
-JSBP.canvas.palette = new Uint32Array(255);
+JSBP.canvas.palette = new Uint32Array(256);
 
 JSBP.canvas.init = function() {
     JSBP.canvas.context = $("#screen")[0].getContext("2d");
@@ -17,6 +17,9 @@ JSBP.canvas.init = function() {
         for (var g = 0; g <= 0xFF; g += 0x33)
             for (var b = 0; b <= 0xFF; b += 0x33)
                 JSBP.canvas.palette[i++] = 0xFF000000 | b<<16 | g<<8 | r;
+
+    while (i <= 255)
+        JSBP.canvas.palette[i++] = 0xFF000000;
 }
 
 JSBP.canvas.tick = function() {
