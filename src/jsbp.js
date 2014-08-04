@@ -26,6 +26,9 @@ JSBP.tick = function() {
 }
 
 JSBP.setRunning = function(state) {
+    if (state == undefined)
+        state = !JSBP.running;
+
     JSBP.running = state;
 
     if (state) {
