@@ -6,12 +6,13 @@ JSBP.MEMSIZE = 0x1000008;
 JSBP.running = false;
 JSBP.tickId = 0;
 
-// This will be our main memory once JSBP.core loads
+// This will be our main memory
 JSBP.mem = null;
 
 JSBP.init = function() {
-    JSBP.core.init();
-    JSBP.canvas.init();
+    JSBP.mem = new Uint8Array(JSBP.MEMSIZE);
+
+    JSBP.screen.init();
     JSBP.audio.init();
     JSBP.input.init();
     JSBP.loader.init();
@@ -21,7 +22,7 @@ JSBP.init = function() {
 
 JSBP.tick = function() {
     JSBP.core.tick();
-    JSBP.canvas.tick();
+    JSBP.screen.tick();
     JSBP.audio.tick();
 }
 

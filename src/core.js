@@ -1,10 +1,5 @@
 JSBP.core = {};
 
-JSBP.core.init = function() {
-    // We add 8 bytes to avoid overflows
-    JSBP.mem = new Uint8Array(JSBP.MEMSIZE);
-}
-
 JSBP.core.tick = function() {
     // Fetch the 3-byte program counter from adress 2
     var pc = JSBP.mem[2]<<16 | JSBP.mem[3]<<8 | JSBP.mem[4];
