@@ -1,0 +1,6 @@
+src/jsbp.js
+src/core.js
+src/canvas.js
+src/audio.js
+src/input.js
+src/loader.js
