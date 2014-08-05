@@ -5,19 +5,20 @@ JSBP.MEMSIZE = 0x1000008;
 
 JSBP.running = false;
 JSBP.tickId = 0;
+JSBP.speed = 1000 / 60;
 
 // This will be our main memory
 JSBP.mem = null;
 
 JSBP.init = function() {
+    console.time("Allocating 16MiB");
     JSBP.mem = new Uint8Array(JSBP.MEMSIZE);
+    console.timeEnd("Allocating 16MiB");
 
     JSBP.screen.init();
     JSBP.audio.init();
     JSBP.input.init();
     JSBP.loader.init();
-
-    //JSBP.setRunning(true);
 }
 
 JSBP.tick = function() {
@@ -26,19 +27,35 @@ JSBP.tick = function() {
     JSBP.audio.tick();
 }
 
-JSBP.setRunning = function(state) {
-    if (state == undefined)
-        state = !JSBP.running;
 
-    JSBP.running = state;
-
-    if (state) {
-        JSBP.tickId = setInterval(JSBP.tick, 1000 / 60);
+JSBP.start = function() {
+    if (!JSBP.running) {
+        JSBP.tickId = setInterval(JSBP.tick, JSBP.speed);
         JSBP.audio.node.connect(JSBP.audio.context.destination);
+        JSBP.running = true;
     }
-    else {
+}
+
+JSBP.stop = function() {
+    if (JSBP.running) {
         clearInterval(JSBP.tickId);
         JSBP.audio.node.disconnect();
+        JSBP.running = false;
+    }
+}
+
+JSBP.toggle = function() {
+    if (JSBP.running)
+        JSBP.stop();
+    else
+        JSBP.start();
+}
+
+JSBP.setSpeed = function(speed) {
+    JSBP.speed = speed;
+    if (JSBP.running) {
+        clearInterval(JSBP.tickId);
+        JSBP.tickId = setInterval(JSBP.tick, speed);
     }
 }
 

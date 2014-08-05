@@ -6,10 +6,12 @@ JSBP.screen.init = function() {
     JSBP.screen.context = $("#screen")[0].getContext("2d");
 
     // Initiate fast per-pixel stuff using typed arrays
+    console.time("Initiating fast per-pixel drawing")
     JSBP.screen.image = JSBP.screen.context.getImageData(0, 0, 256, 256);
     JSBP.screen.buffer = new ArrayBuffer(JSBP.screen.image.data.length);
     JSBP.screen.buffer8 = new Uint8ClampedArray(JSBP.screen.buffer);
     JSBP.screen.array = new Uint32Array(JSBP.screen.buffer);
+    console.timeEnd("Initiating fast per-pixel drawing")
 
     // Build the 6*6*6 color palette
     var i = 0;

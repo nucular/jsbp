@@ -1,6 +1,7 @@
 JSBP.audio = {};
 
 JSBP.audio.init = function() {
+    console.time("Initiating audio device");
     JSBP.audio.context = new webkitAudioContext();
 
     // Create the buffer
@@ -13,7 +14,9 @@ JSBP.audio.init = function() {
     JSBP.audio.node = JSBP.audio.context.createBufferSource(0);
     JSBP.audio.node.loop = true;
     JSBP.audio.node.buffer = JSBP.audio.buffer;
+
     JSBP.audio.node.start();
+    console.timeEnd("Initiating audio device");
 }
 
 JSBP.audio.tick = function() {

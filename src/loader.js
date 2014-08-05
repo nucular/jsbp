@@ -6,6 +6,7 @@ JSBP.loader.init = function() {
 }
 
 JSBP.loader.loadFile = function(file) {
+    console.time("Loading file " + file.name);
     var reader = new FileReader();
 
     reader.onload = function(e) {
@@ -19,6 +20,7 @@ JSBP.loader.loadFile = function(file) {
         for (var i = 0; i < buffer.byteLength; i++) {
             JSBP.mem[i] = view.getUint8(i);
         }
+        console.timeEnd("Loading file " + file.name);
     }
 
     // Read the file asynchronously
