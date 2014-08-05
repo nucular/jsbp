@@ -1,5 +1,7 @@
 JSBP.loader = {};
 
+JSBP.loader.firsttime = true;
+
 JSBP.loader.init = function() {
     $("#overlay").bind("dragenter", JSBP.loader.dragEnter);
     $("#overlay").bind("drop", JSBP.loader.drop);
@@ -24,6 +26,11 @@ JSBP.loader.loadFile = function(file) {
             JSBP.mem[i] = view.getUint8(i);
         }
         console.timeEnd("Loading file " + file.name);
+
+        if (JSBP.loader.firsttime) {
+            JSBP.loader.firsttime = false;
+            JSBP.start();
+        }
     }
 
     // Read the file asynchronously
