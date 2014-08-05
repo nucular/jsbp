@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <title>JsBP Chrome Experiment &middot; by nucular</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic&subset=latin-ext">
     <link type="text/css" rel="stylesheet" href="3rd/octicons/octicons.css">
     <link type="text/css" rel="stylesheet" href="style.css">
 
@@ -8,7 +9,21 @@
     <script type="text/javascript" src="jsbp.min.js"></script>
 </head>
 <body>
-    <canvas id="screen" width="256" height="256">
-    </canvas>
+    <div id="wrapper">
+        <div id="content">
+            <h1>JsBP</h1>
+            <canvas id="screen" width="256" height="256">
+            </canvas>
+            <div id="overlay">
+                Drop a BytePusher binary here<br/>
+                <span class="mega-octicon octicon-file-binary"></span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        by <a href="http://nucular.github.io">nucular</a>
+        <a href="https://github.com/nucular/JsBP" class="mega-octicon octicon-mark-github"></a>
+    </footer>
 </body>
 </html>
