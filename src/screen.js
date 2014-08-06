@@ -3,7 +3,7 @@ JSBP.screen = {};
 JSBP.screen.palette = new Uint32Array(256);
 
 JSBP.screen.init = function() {
-    JSBP.screen.context = $("#screen")[0].getContext("2d");
+    JSBP.screen.context = $("#canvas")[0].getContext("2d");
 
     // Initiate fast per-pixel stuff using typed arrays
     console.time("Initiating fast per-pixel drawing")

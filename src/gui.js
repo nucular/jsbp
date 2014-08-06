@@ -3,7 +3,39 @@ JSBP.gui = {};
 JSBP.gui.init = function() {
     JSBP.gui.bindOverlay();
     JSBP.gui.bindDocument();
-    JSBP.gui.bindScreen();
+    JSBP.gui.bindCanvas();
+
+    JSBP.gui.showOverlay(
+        "This is a <a href=\"http://esolangs.org/wiki/BytePusher\">BytePusher</a> VM.<br/>\
+        Drop a binary file here or select a demo.", "file-binary");
+}
+
+JSBP.gui.showOverlay = function(text, icon, back, delay) {
+    var icon = icon || "info";
+    var back = back || "rgba(40, 40, 40, 0.8)";
+
+    var $overlay = $("#overlay");
+
+    var show = function() {
+        $("#overlay-icon").attr("class", "mega-octicon octicon-" + icon);
+        $("#overlay-text").html(text);
+        $overlay.css("background-color", back).fadeIn("fast");
+        if (delay) {
+            $overlay.delay(delay).fadeOut("fast");
+        }
+    }
+
+    if ($overlay.attr("display") == "none") {
+        show();
+    } else {
+        $overlay.fadeOut("fast", show);
+    }
+}
+
+JSBP.gui.hideOverlay = function() {
+    var $overlay = $("#overlay");
+    if ($overlay.attr("display") != "none")
+        $overlay.fadeOut("fast");
 }
 
 JSBP.gui.bindOverlay = function() {
@@ -25,7 +57,10 @@ JSBP.gui.bindOverlay = function() {
         if (file.size < JSBP.MEMSIZE)
             JSBP.core.loadFile(file);
         else
-            alert("File too big");
+            $(this).fadeOut("fast", function() {
+                JSBP.gui.showOverlay("That file is too large<br/>(16MiB max.)",
+                    "alert", "rgba(90, 40, 40, 0.8)", 1000);
+            });
     });
 }
 
@@ -39,17 +74,14 @@ JSBP.gui.bindDocument = function() {
         interval = setInterval(function() {
             isover = false;
             clearInterval(interval);
-
-            if (!JSBP.core.first) {
-                $("#overlay").fadeOut("fast");
-            }
+            JSBP.gui.hideOverlay();
         }, 100);
 
         if (!isover) {
             isover = true;
             e.originalEvent.dataTransfer.dropEffect = "none";
 
-            $("#overlay").fadeIn("fast");
+            JSBP.gui.showOverlay("Drop the file here<br/>(16 MiB max.)", "file-binary");
         }
     }).on("drop", function(e) {
         e.preventDefault();
@@ -57,8 +89,8 @@ JSBP.gui.bindDocument = function() {
     });
 }
 
-JSBP.gui.bindScreen = function() {
-    $("#screen").on("mouseenter", function(e) {
+JSBP.gui.bindCanvas = function() {
+    $("#canvas").on("mouseenter", function(e) {
         if (!JSBP.core.first) {
             if (JSBP.running)
                 $("#pause").attr("class", "mega-octicon octicon-playback-pause");
