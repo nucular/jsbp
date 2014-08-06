@@ -9,7 +9,7 @@
 #compile-js rebuild ../html/assets/js/build/xylo.app.min.js manifest.txt
 #compile-js build ../html/assets/js/build/xylo.app.min.js booter.js xylo.js service.js
 
-args=--externs 3rd/jquery-1.9.1-externs.js
+args="--externs 3rd/jquery-1.9.1-externs.js"
 
 command=$1
 output=$2
