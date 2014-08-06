@@ -31,13 +31,17 @@ JSBP.core.loadFile = function(file) {
         var buffer = e.target.result
         // Create a DataView for accessing the file buffer
         var view = new DataView(buffer);
-        // Reallocate the memory
-        JSBP.mem = new Uint8Array(JSBP.MEMSIZE);
 
-        // And finally copy the file into the new memory
+        // Copy the file into the memory
         for (var i = 0; i < buffer.byteLength; i++) {
             JSBP.mem[i] = view.getUint8(i);
         }
+
+        // And pad remaining bytes with zeros
+        for (var i = buffer.byteLength; i < JSBP.MEMSIZE; i++) {
+            JSBP.mem[i] = 0;
+        }
+
         console.timeEnd("Loading file " + file.name);
 
         if (JSBP.core.first) {
