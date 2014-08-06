@@ -18,7 +18,7 @@ JSBP.init = function() {
     JSBP.screen.init();
     JSBP.audio.init();
     JSBP.input.init();
-    JSBP.loader.init();
+    JSBP.gui.init();
 }
 
 JSBP.tick = function() {

@@ -1,5 +1,7 @@
 JSBP.core = {};
 
+JSBP.core.first = true;
+
 JSBP.core.tick = function() {
     // Fetch the 3-byte program counter from adress 2
     var pc = JSBP.mem[2]<<16 | JSBP.mem[3]<<8 | JSBP.mem[4];
@@ -19,4 +21,31 @@ JSBP.core.tick = function() {
         // Jump to adress c
         pc = c;
     }
+}
+
+JSBP.core.loadFile = function(file) {
+    console.time("Loading file " + file.name);
+    var reader = new FileReader();
+
+    reader.onload = function(e) {
+        var buffer = e.target.result
+        // Create a DataView for accessing the file buffer
+        var view = new DataView(buffer);
+        // Reallocate the memory
+        JSBP.mem = new Uint8Array(JSBP.MEMSIZE);
+
+        // And finally copy the file into the new memory
+        for (var i = 0; i < buffer.byteLength; i++) {
+            JSBP.mem[i] = view.getUint8(i);
+        }
+        console.timeEnd("Loading file " + file.name);
+
+        if (JSBP.core.first) {
+            JSBP.core.first = false;
+            JSBP.start();
+        }
+    }
+
+    // Read the file asynchronously
+    reader.readAsArrayBuffer(file);
 }

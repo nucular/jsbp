@@ -12,11 +12,14 @@
     <div id="wrapper">
         <div id="content">
             <h1>JsBP</h1>
-            <canvas id="screen" width="256" height="256">
-            </canvas>
-            <div id="overlay">
-                Drop a BytePusher binary here<br/>
-                <span class="mega-octicon octicon-file-binary"></span>
+            <div id="canvas-wrapper">
+                <canvas id="screen" width="256" height="256">
+                </canvas>
+                <span id="pause" class="mega-octicon octicon-playback-pause"></span>
+                <div id="overlay">
+                    Drop a BytePusher binary here<br/>
+                    <span class="mega-octicon octicon-file-binary"></span>
+                </div>
             </div>
         </div>
     </div>
