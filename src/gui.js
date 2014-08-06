@@ -1,14 +1,18 @@
 JSBP.gui = {};
 
 JSBP.gui.init = function() {
-    $("#overlay").bind("dragenter", function(e) {
+    JSBP.gui.bindOverlay();
+    JSBP.gui.bindDocument();
+    JSBP.gui.bindScreen();
+}
+
+JSBP.gui.bindOverlay = function() {
+    $("#overlay").on("dragenter", function(e) {
         e.stopPropagation();
         e.preventDefault();
         // Show that we won't move anything
         e.originalEvent.dataTransfer.dropEffect = "copy";
-    });
-
-    $("#overlay").bind("drop", function(e) {
+    }).on("drop", function(e) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -23,9 +27,11 @@ JSBP.gui.init = function() {
         else
             alert("File too big");
     });
+}
 
+JSBP.gui.bindDocument = function() {
     var interval, isover;
-    $(document).bind("dragover", function(e) {
+    $(document).on("dragover", function(e) {
         e.preventDefault();
 
         clearInterval(interval);
@@ -45,14 +51,14 @@ JSBP.gui.init = function() {
 
             $("#overlay").fadeIn("fast");
         }
-    });
-
-    $(document).bind("drop", function(e) {
+    }).on("drop", function(e) {
         e.preventDefault();
         e.stopPropagation();
     });
+}
 
-    $("#screen").bind("mouseenter", function(e) {
+JSBP.gui.bindScreen = function() {
+    $("#screen").on("mouseenter", function(e) {
         if (!JSBP.core.first) {
             if (JSBP.running)
                 $("#pause").attr("class", "mega-octicon octicon-playback-pause");
@@ -60,15 +66,11 @@ JSBP.gui.init = function() {
                 $("#pause").attr("class", "mega-octicon octicon-playback-play");
             $("#pause").fadeIn("fast");
         }
-    });
-
-    $("#screen").bind("mouseleave", function(e) {
+    }).on("mouseleave", function(e) {
         if (!JSBP.core.first) {
             $("#pause").fadeOut("fast");
         }
-    });
-
-    $("#screen").bind("click", function(e) {
+    }).on("click", function(e) {
         if (!JSBP.core.first) {
             JSBP.toggle();
             if (JSBP.running)
@@ -78,4 +80,3 @@ JSBP.gui.init = function() {
         }
     });
 }
-
