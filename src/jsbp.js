@@ -19,6 +19,7 @@ JSBP.init = function() {
     JSBP.audio.init();
     JSBP.input.init();
     JSBP.gui.init();
+    JSBP.demos.init();
 }
 
 JSBP.tick = function() {

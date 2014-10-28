@@ -4,3 +4,4 @@ src/screen.js
 src/audio.js
 src/input.js
 src/gui.js
+src/demos.js
