@@ -24,6 +24,11 @@ JSBP.demos.init = function() {
 }
 
 JSBP.demos.load = function(url) {
+    var wasrunning = JSBP.running;
+    JSBP.stop();
+    JSBP.screen.clear();
+    JSBP.gui.showOverlay("Downloading demo", "cloud-download");
+
     console.time("Downloading file from " + url);
 
     var req = new XMLHttpRequest();
@@ -36,6 +41,9 @@ JSBP.demos.load = function(url) {
 
         if (req.status == 200) {
             JSBP.core.loadArrayBuffer(ab);
+            JSBP.gui.hideOverlay();
+            if (wasrunning)
+                JSBP.start();
         } else {
             JSBP.gui.showOverlay("Could not download the demo", "alert",
                 "rgba(90, 40, 40, 0.8)", 1000);

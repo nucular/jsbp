@@ -35,7 +35,7 @@ JSBP.gui.showOverlay = function(text, icon, back, delay) {
 JSBP.gui.hideOverlay = function() {
     var $overlay = $("#overlay");
     if ($overlay.attr("display") != "none")
-        $overlay.fadeOut("fast");
+        $overlay.stop().fadeOut("fast");
 }
 
 JSBP.gui.bindOverlay = function() {
@@ -54,13 +54,15 @@ JSBP.gui.bindOverlay = function() {
         // Only allow one file at a time
         var file = e.originalEvent.dataTransfer.files[0];
 
-        if (file.size < JSBP.MEMSIZE)
+        if (file.size < JSBP.MEMSIZE) {
+            JSBP.screen.clear();
             JSBP.core.loadFile(file);
-        else
+        } else {
             $(this).fadeOut("fast", function() {
                 JSBP.gui.showOverlay("That file is too large<br/>(16MiB max.)",
                     "alert", "rgba(90, 40, 40, 0.8)", 1000);
             });
+        }
     });
 }
 

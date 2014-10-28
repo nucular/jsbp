@@ -24,6 +24,10 @@ JSBP.screen.init = function() {
         JSBP.screen.palette[i++] = 0xFF000000;
 }
 
+JSBP.screen.clear = function() {
+    JSBP.screen.context.clearRect(0, 0, 256, 256);
+}
+
 JSBP.screen.tick = function() {
     // Fetch the graphics block location
     var start = JSBP.mem[5] << 16;
